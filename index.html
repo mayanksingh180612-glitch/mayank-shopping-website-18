@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAYANK SHOPPING - India Store</title>
+
+<style>
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:Arial,sans-serif;
+}
+
+body{
+ background:#f1f3f6;
+ color:#222;
+}
+
+header{
+ background:linear-gradient(120deg,#101b38,#182e57);
+ color:white;
+ padding:17px 5%;
+ position:sticky;
+ top:0;
+ z-index:100;
+ box-shadow:0 4px 15px #0003;
+}
+
+.top{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+ flex-wrap:wrap;
+}
+
+.logo{
+ font-size:27px;
+ font-weight:bold;
+ color:#ffcc00;
+}
+
+.search{
+ flex:1;
+ display:flex;
+ min-width:200px;
+}
+
+.search input{
+ width:100%;
+ padding:13px;
+ border:0;
+ border-radius:7px 0 0 7px;
+ outline:none;
+}
+
+.search button{
+ border:0;
+ padding:12px 18px;
+ background:#ffcc00;
+ cursor:pointer;
+ border-radius:0 7px 7px 0;
+}
+
+.cart-btn{
+ background:#ffcc00;
+ color:#111;
+ border:0;
+ padding:12px 17px;
+ border-radius:7px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+.hero{
+ margin:20px;
+ padding:50px 25px;
+ border-radius:18px;
+ background:linear-gradient(120deg,#091c3b,#1369a5,#12a6a0);
+ color:white;
+ text-align:center;
+}
+
+.hero h1{
+ font-size:38px;
+ margin-bottom:15px;
+}
+
+.hero p{
+ font-size:17px;
+ margin-bottom:20px;
+}
+
+.hero button{
+ padding:13px 27px;
+ border:0;
+ border-radius:8px;
+ background:#ffcc00;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+.categories{
+ display:flex;
+ gap:12px;
+ overflow-x:auto;
+ padding:15px;
+ background:white;
+}
+
+.cat{
+ min-width:105px;
+ padding:15px 10px;
+ border-radius:12px;
+ background:#f2f5fa;
+ text-align:center;
+ cursor:pointer;
+ transition:.3s;
+}
+
+.cat:hover{
+ background:#ffcc00;
+ transform:translateY(-5px);
+}
+
+.cat span{
+ display:block;
+ font-size:30px;
+ margin-bottom:8px;
+}
+
+.section{
+ padding:20px;
+}
+
+.section h2{
+ margin-bottom:20px;
+ color:#152b50;
+}
+
+.filters{
+ display:flex;
+ gap:10px;
+ flex-wrap:wrap;
+ margin-bottom:20px;
+}
+
+.filters button{
+ border:0;
+ background:white;
+ padding:10px 16px;
+ border-radius:20px;
+ cursor:pointer;
+}
+
+.filters button.active,
+.filters button:hover{
+ background:#152b50;
+ color:white;
+}
+
+.products{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(175px,1fr));
+ gap:17px;
+}
+
+.card{
+ background:white;
+ border-radius:13px;
+ overflow:hidden;
+ box-shadow:0 3px 12px #0001;
+ transition:.3s;
+ position:relative;
+}
+
+.card:hover{
+ transform:translateY(-6px);
+ box-shadow:0 10px 25px #0002;
+}
+
+.product-img{
+ height:155px;
+ background:#f7f7f7;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+
+.product-img img{
+ width:100%;
+ height:100%;
+ object-fit:contain;
+}
+
+.info{
+ padding:12px;
+}
+
+.info h3{
+ font-size:15px;
+ margin-bottom:8px;
+}
+
+.price{
+ color:#087b39;
+ font-weight:bold;
+ font-size:19px;
+}
+
+.old-price{
+ color:#888;
+ text-decoration:line-through;
+ font-size:13px;
+ margin-left:5px;
+}
+
+.rating{
+ color:#e9a300;
+ margin:7px 0;
+ font-size:13px;
+}
+
+.card button{
+ width:100%;
+ padding:10px;
+ border:0;
+ cursor:pointer;
+ font-weight:bold;
+}
+
+.add{
+ background:#ffcc00;
+}
+
+.buy{
+ background:#152b50;
+ color:white;
+}
+
+.heart{
+ position:absolute;
+ top:8px;
+ right:8px;
+ background:white;
+ border:0;
+ border-radius:50%;
+ width:32px;
+ height:32px;
+ cursor:pointer;
+ font-size:19px;
+}
+
+#cartPanel{
+ position:fixed;
+ right:-420px;
+ top:0;
+ width:350px;
+ max-width:90%;
+ height:100%;
+ background:white;
+ z-index:200;
+ padding:20px;
+ overflow-y:auto;
+ transition:.4s;
+ box-shadow:-5px 0 20px #0003;
+}
+
+#cartPanel.open{
+ right:0;
+}
+
+.close{
+ float:right;
+ cursor:pointer;
+ background:#152b50;
+ color:white;
+ border:0;
+ padding:7px 12px;
+}
+
+.cart-item{
+ padding:12px 0;
+ border-bottom:1px solid #ddd;
+}
+
+.cart-item button{
+ padding:4px 8px;
+ cursor:pointer;
+}
+
+footer{
+ background:#101b38;
+ color:white;
+ padding:35px 20px;
+ text-align:center;
+ margin-top:30px;
+}
+
+footer h2{
+ color:#ffcc00;
+ margin-bottom:12px;
+}
+
+.empty{
+ padding:30px;
+ text-align:center;
+ color:#777;
+}
+
+@media(max-width:600px){
+ .hero h1{font-size:27px;}
+ .top{justify-content:center;}
+ .logo{width:100%;text-align:center;}
+ .products{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+ }
+ .product-img{height:130px;}
+ .section{padding:12px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="top">
+  <div class="logo">🛍️ MAYANK SHOPPING</div>
+
+  <div class="search">
+   <input id="search" placeholder="Search products in India...">
+   <button onclick="render()">🔍</button>
+  </div>
+
+  <button class="cart-btn" onclick="openCart()">
+   🛒 Cart <span id="cartCount">0</span>
+  </button>
+ </div>
+</header>
+
+<div class="hero">
+ <h1>WELCOME TO MAYANK SHOPPING</h1>
+ <p>India's Shopping Destination 🇮🇳</p>
+ <p>Everything You Need, All in One Place!</p>
+ <button onclick="document.getElementById('shop').scrollIntoView()">
+  SHOP NOW →
+ </button>
+</div>
+
+<div class="categories" id="categories"></div>
+
+<section class="section" id="shop">
+
+<h2>🔥 Explore All Products</h2>
+
+<div class="filters" id="filters"></div>
+
+<div class="products" id="products"></div>
+
+</section>
+
+<div id="cartPanel">
+
+<button class="close" onclick="closeCart()">✕ Close</button>
+
+<h2>🛒 My Shopping Cart</h2>
+
+<div id="cartItems"></div>
+
+<h3 id="total" style="margin-top:20px">
+ Total: ₹0
+</h3>
+
+<button onclick="checkout()"
+style="background:#ffcc00;padding:13px;width:100%;border:0;margin-top:20px;cursor:pointer">
+ Proceed to Checkout
+</button>
+
+</div>
+
+<footer>
+<h2>MAYANK SHOPPING 🇮🇳</h2>
+<p>India's All-in-One Online Shopping Store</p>
+<br>
+<p>Fashion | Electronics | Grocery | Home | Sports</p>
+<br>
+<p>© 2026 MAYANK SHOPPING. All Rights Reserved.</p>
+</footer>
+
+<script>
+
+const categories = [
+"All","Fashion","Electronics","Grocery",
+"Home","Kitchen","Footwear","Beauty",
+"Mobiles","Sports","Books","Toys",
+"Automobile","Agriculture","Jewellery"
+];
+
+const icons = [
+"🛍️","👕","📱","🥦","🏠","🍳",
+"👟","💄","📲","⚽","📚","🧸",
+"🚗","🌾","💍"
+];
+
+const data = [
+["T-Shirt","Fashion",499,"👕"],
+["Jeans","Fashion",899,"👖"],
+["Shirt","Fashion",699,"👔"],
+["Jacket","Fashion",1499,"🧥"],
+["Saree","Fashion",999,"🥻"],
+["Kurta","Fashion",799,"👘"],
+["Dress","Fashion",899,"👗"],
+["Mobile Phone","Mobiles",12999,"📱"],
+["Samsung Phone","Electronics",15999,"📲"],
+["Laptop","Electronics",45999,"💻"],
+["Headphones","Electronics",999,"🎧"],
+["Smart Watch","Electronics",1499,"⌚"],
+["Bluetooth Speaker","Electronics",1299,"🔊"],
+["Keyboard","Electronics",699,"⌨️"],
+["Rice 5 KG","Grocery",299,"🍚"],
+["Wheat 5 KG","Grocery",249,"🌾"],
+["Sugar 1 KG","Grocery",49,"🍬"],
+["Cooking Oil","Grocery",149,"🫗"],
+["Tea","Grocery",129,"🍵"],
+["Coffee","Grocery",199,"☕"],
+["Potato 1 KG","Grocery",30,"🥔"],
+["Tomato 1 KG","Grocery",40,"🍅"],
+["Onion 1 KG","Grocery",35,"🧅"],
+["Apple 1 KG","Grocery",150,"🍎"],
+["Banana","Grocery",50,"🍌"],
+["Mango","Grocery",100,"🥭"],
+["Milk","Grocery",60,"🥛"],
+["Curd","Grocery",50,"🥣"],
+["Refrigerator","Home",15999,"🧊"],
+["Washing Machine","Home",12999,"🫧"],
+["Sofa","Home",18999,"🛋️"],
+["Bed","Home",14999,"🛏️"],
+["Table","Home",2999,"🪑"],
+["LED Bulb","Home",99,"💡"],
+["Pressure Cooker","Kitchen",999,"🍲"],
+["Mixer Grinder","Kitchen",1999,"🥤"],
+["Water Bottle","Kitchen",199,"🍼"],
+["Dinner Set","Kitchen",899,"🍽️"],
+["Running Shoes","Footwear",1299,"👟"],
+["Slippers","Footwear",199,"🩴"],
+["Sports Shoes","Footwear",1799,"🥾"],
+["Face Wash","Beauty",199,"🧴"],
+["Shampoo","Beauty",149,"🧴"],
+["Perfume","Beauty",499,"🌸"],
+["Cricket Bat","Sports",1499,"🏏"],
+["Football","Sports",599,"⚽"],
+["Badminton Racket","Sports",899,"🏸"],
+["School Bag","Books",699,"🎒"],
+["Notebook","Books",49,"📓"],
+["Story Book","Books",199,"📖"],
+["Teddy Bear","Toys",499,"🧸"],
+["Remote Car","Toys",799,"🚗"],
+["Bicycle","Toys",3999,"🚲"],
+["Car Cover","Automobile",699,"🚘"],
+["Bike Helmet","Automobile",999,"⛑️"],
+["Gold Plated Ring","Jewellery",499,"💍"],
+["Necklace","Jewellery",899,"📿"],
+["Seeds","Agriculture",99,"🌱"],
+["Garden Tools","Agriculture",299,"🪴"],
+["Flower Pot","Agriculture",199,"🪴"]
+];
+
+let cart = JSON.parse(localStorage.getItem("mayankCart") || "[]");
+let selected = "All";
+let wishlist = [];
+
+const categoriesBox = document.getElementById("categories");
+const filters = document.getElementById("filters");
+
+categories.forEach((c,i)=>{
+ let div=document.createElement("div");
+ div.className="cat";
+ div.innerHTML=`<span>${icons[i]}</span>${c}`;
+ div.onclick=()=>selectCategory(c);
+ categoriesBox.appendChild(div);
+
+ let btn=document.createElement("button");
+ btn.textContent=c;
+ btn.onclick=()=>selectCategory(c);
+ filters.appendChild(btn);
+});
+
+function selectCategory(c){
+ selected=c;
+ render();
+}
+
+function render(){
+
+ const query=document.getElementById("search").value.toLowerCase();
+
+ const list=data.filter(p=>
+ (selected==="All" || p[1]===selected) &&
+ p[0].toLowerCase().includes(query)
+ );
+
+ document.querySelectorAll(".filters button").forEach(b=>{
+ b.classList.toggle("active",b.textContent===selected);
+ });
+
+ const box=document.getElementById("products");
+ box.innerHTML="";
+
+ if(!list.length){
+ box.innerHTML='<div class="empty">No products found.</div>';
+ return;
+ }
+
+ list.forEach((p)=>{
+
+ let index=data.indexOf(p);
+
+ let card=document.createElement("div");
+ card.className="card";
+
+ card.innerHTML=`
+ <button class="heart" onclick="toggleWish(${index},this)">
+ ${wishlist.includes(index)?"❤️":"🤍"}
+ </button>
+
+ <div class="product-img">
+ <div style="font-size:75px">${p[3]}</div>
+ </div>
+
+ <div class="info">
+ <h3>${p[0]}</h3>
+ <div class="price">₹${p[2]}</div>
+ <div class="rating">⭐ 4.5 | India Store</div>
+ <button class="add" onclick="addCart(${index})">
+ Add to Cart
+ </button>
+ <button class="buy" onclick="addCart(${index});openCart()">
+ Buy Now
+ </button>
+ </div>
+ `;
+
+ box.appendChild(card);
+
+ });
+
+}
+
+function toggleWish(i,btn){
+ if(wishlist.includes(i)){
+ wishlist=wishlist.filter(x=>x!==i);
+ btn.innerText="🤍";
+ }else{
+ wishlist.push(i);
+ btn.innerText="❤️";
+ }
+}
+
+function saveCart(){
+ localStorage.setItem("mayankCart",JSON.stringify(cart));
+}
+
+function addCart(i){
+ let item=cart.find(x=>x.id===i);
+ if(item){
+ item.qty++;
+ }else{
+ cart.push({id:i,qty:1});
+ }
+ saveCart();
+ updateCart();
+ alert(data[i][0]+" added to cart!");
+}
+
+function updateCart(){
+
+ let box=document.getElementById("cartItems");
+ box.innerHTML="";
+
+ let total=0;
+ let count=0;
+
+ cart.forEach(item=>{
+
+ let p=data[item.id];
+ total+=p[2]*item.qty;
+ count+=item.qty;
+
+ let div=document.createElement("div");
+ div.className="cart-item";
+
+ div.innerHTML=`
+ <b>${p[0]}</b>
+ <p
